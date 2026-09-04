@@ -1,6 +1,6 @@
 // Go to CONNECT --> Login --> Exam Controller --> Class Attendance --> Select Semester, Academic Degree, Course, Section --> Attendance Entry --> 3-dot menu --> Developer Tools
 // Developer Tools (Ctrl+Shift+I) -> Sources -> Left Pane (may be hidden, click >>) -> Snippets -> New Snippet
-// Paste the entire script, then replace the "allAbsences" object below with the dictionary copied from your Google Sheet
+// Paste the entire script, then replace the "allAbsences" object below (lines 12 to 17) with the content copied from your Google Sheet
 // Remove any enclosing double quotes (" ") if the pasted content includes them
 // Ctrl + Enter to run
 //
