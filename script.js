@@ -1,0 +1,76 @@
+// Go to CONNECT --> Login --> Exam Controller --> Class Attendance --> Select Semester, Academic Degree, Course, Section --> Attendance Entry --> 3-dot menu --> Developer Tools
+// Developer Tools (Ctrl+Shift+I) -> Sources -> Left Pane (may be hidden, click >>) -> Snippets -> New Snippet
+// Paste the entire script, then replace the "allAbsences" object below with the dictionary copied from your Google Sheet
+// Remove any enclosing double quotes (" ") if the pasted content includes them
+// Ctrl + Enter to run
+//
+// NOTE: Any student ID NOT listed under a date is automatically marked PRESENT for that date
+// NOTE: Order of dates does not matter; incorrect dates or student IDs are simply skipped
+// NOTE: If rerunning the script, REFRESH the page first. It may occasionally lag to load and cause errors
+// NOTE: Removing a student ID from a date's list and rerunning will mark that student PRESENT again
+
+const allAbsences = {
+    "09-06-2026": ["10000540", "10000552", "243013"],
+    "14-06-2026": ["241012"],
+    "07-07-2026": ["232010", "251210"],
+    "16-06-2026": ["10000541", "10000552", "242013", "243013"],
+};
+
+document.getElementById("mat-select-value-13").click();
+const classes = document.querySelectorAll(".mat-mdc-option");
+classes[1].click();
+await sleep(2000);
+let studentRows = document.querySelectorAll(".regular-student-row");
+for (let attempt=0; attempt<3; attempt++) {
+    if (studentRows.length>0) {
+        break;
+    }
+    await sleep(2000);
+    studentRows = document.querySelectorAll(".regular-student-row");
+}
+const studentIds = [];
+
+for (let i=0; i<studentRows.length; i++) {
+    studentIds.push(studentRows[i].querySelectorAll(".text-center")[0].textContent.trim());
+}
+
+let presentAbsentButtons;
+for (let i=0; i<Object.keys(allAbsences).length; i++) {
+    date = Object.keys(allAbsences)[i];
+    absentStudentIds = allAbsences[date];
+    str = " Regular Class - " + date + " 11:00 AM - 12:20 PM ";
+    for (let m=1; m<classes.length; m++) {
+        if (classes[m].textContent == str) {
+            classes[m].click();
+            await sleep(3000);
+            for (let attempt=0; attempt<3; attempt++) {
+                presentAbsentButtons = document.querySelectorAll(".mdc-radio__native-control");
+                if (presentAbsentButtons.length >= studentIds.length*2) {
+                    break;
+                }
+                await sleep(2000);
+            }
+            for (let j=0; j<absentStudentIds.length; j++) {
+                for (let k=0; k<studentIds.length; k++) {
+                    if (absentStudentIds[j] == studentIds[k]) {
+                        presentAbsentButtons[2*k+1].scrollIntoView({behavior: "smooth", block: "center"});
+                        await sleep(1000);
+                        presentAbsentButtons[2*k+1].click();
+                        await sleep(500);
+                    }
+                    presentAbsentButtons[2*k].click();
+                }
+            }
+            break;
+        }
+    }
+    let save = document.querySelector(".btn.btn-primary");
+    save.scrollIntoView({behavior: "smooth", block: "center"});
+    await sleep(500);
+    save.click();
+    await sleep(3000);
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
