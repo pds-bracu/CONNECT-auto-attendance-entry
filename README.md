@@ -28,9 +28,9 @@ This script automates the process of entering attendance (absences) into the CON
 - Navigate to the `Sources` tab
 - In the left pane (may be hidden, click `>>` if needed), go to `Snippets`
 - Create a **New Snippet**
-- Paste the entire [script](#)
+- Paste the entire [script](script.js)
 - Copy the cell where the formula was applied in your Google Sheet
-- Paste and replace the `allAbsences` dictionary in the script with the one copied from your sheet — if the pasted content is wrapped in double quotes (`" "`), **remove them** before running
+- Paste and replace **lines 12–17** (the `allAbsences` block) in the script with the content copied from your sheet. If the pasted content is wrapped in double quotes (`" "`), **remove them** before running
 - Press `Ctrl + Enter` to run the [script](script.js)
 - Verify and **Save** the attendance in CONNECT
 
