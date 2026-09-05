@@ -10,65 +10,94 @@
 // NOTE: Removing a student ID from a date's list and rerunning will mark that student PRESENT again
 
 const allAbsences = {
-    "09-06-2026": ["10000540", "10000552", "243013"],
-    "14-06-2026": ["241012"],
-    "07-07-2026": ["232010", "251210"],
-    "16-06-2026": ["10000541", "10000552", "242013", "243013"],
+    "09-06-2026": ["1000054019", "1000055270", "24301321"],
+    "14-06-2026": ["24101282"],
+    "07-07-2026": ["23201047", "25121017"],
+    "16-06-2026": ["1000054189", "1000055270", "24201302", "24301306"],
 };
 
-document.getElementById("mat-select-value-13").click();
-const classes = document.querySelectorAll(".mat-mdc-option");
-classes[1].click();
-await sleep(2000);
-let studentRows = document.querySelectorAll(".regular-student-row");
-for (let attempt=0; attempt<3; attempt++) {
-    if (studentRows.length>0) {
-        break;
+// const allAbsences = {
+//     "09-06-2026": [""],
+//     "14-06-2026": [""],
+//     "07-07-2026": [""],
+//     "16-06-2026": [""],
+// };
+
+let studentIds = await getStudentIds();
+for(let j=0; j<Object.keys(allAbsences).length; j++) {
+    selectAClass(Object.keys(allAbsences)[j]);
+    let presentAbsentButtons = await getPresentAbsentButtons(studentIds);
+    await inputAttendance(studentIds, allAbsences[Object.keys(allAbsences)[j]], presentAbsentButtons);
+    await save();
+}
+
+async function getStudentIds() {
+    document.getElementById("mat-select-value-13").click();
+    let classes = document.querySelectorAll(".mat-mdc-option");
+    classes[1].click();
+    await sleep(3000);
+    let studentRows = document.querySelectorAll(".regular-student-row");
+    for (let attempt=0; attempt<3; attempt++) {
+        if (studentRows.length>0) {
+            break;
+        }
+        await sleep(2000);
+        studentRows = document.querySelectorAll(".regular-student-row");
     }
-    await sleep(2000);
-    studentRows = document.querySelectorAll(".regular-student-row");
+    const studentIds = [];
+    
+    for (let i=0; i<studentRows.length; i++) {
+        studentIds.push(studentRows[i].querySelectorAll(".text-center")[0].textContent.trim());
+    }
+    return studentIds;
 }
-const studentIds = [];
 
-for (let i=0; i<studentRows.length; i++) {
-    studentIds.push(studentRows[i].querySelectorAll(".text-center")[0].textContent.trim());
-}
-
-let presentAbsentButtons;
-for (let i=0; i<Object.keys(allAbsences).length; i++) {
-    date = Object.keys(allAbsences)[i];
-    absentStudentIds = allAbsences[date];
-    str = " Regular Class - " + date + " 11:00 AM - 12:20 PM ";
-    for (let m=1; m<classes.length; m++) {
+async function selectAClass(date) {
+    document.getElementById("mat-select-value-13").click();
+    classes = document.querySelectorAll(".mat-mdc-option");
+    let str = " Regular Class - " + date + " 11:00 AM - 12:20 PM ";
+    for(let m=1; m<classes.length; m++) {
         if (classes[m].textContent == str) {
             classes[m].click();
-            await sleep(3000);
-            for (let attempt=0; attempt<3; attempt++) {
-                presentAbsentButtons = document.querySelectorAll(".mdc-radio__native-control");
-                if (presentAbsentButtons.length >= studentIds.length*2) {
-                    break;
-                }
-                await sleep(2000);
-            }
-            for (let j=0; j<absentStudentIds.length; j++) {
-                for (let k=0; k<studentIds.length; k++) {
-                    if (absentStudentIds[j] == studentIds[k]) {
-                        presentAbsentButtons[2*k+1].scrollIntoView({behavior: "smooth", block: "center"});
-                        await sleep(1000);
-                        presentAbsentButtons[2*k+1].click();
-                        await sleep(500);
-                    }
-                    presentAbsentButtons[2*k].click();
-                }
-            }
+            await sleep(5000);
             break;
         }
     }
+}
+
+async function getPresentAbsentButtons(studentIds) {
+    await sleep(3000);
+    let presentAbsentButtons = document.querySelectorAll(".mdc-radio__native-control");
+    for (let attempt=0; attempt<3; attempt++) {
+        if (presentAbsentButtons.length >= studentIds.length*2) {
+            break;
+        }
+        await sleep(5000);
+        presentAbsentButtons = document.querySelectorAll(".mdc-radio__native-control");
+    }
+    return presentAbsentButtons;
+}
+
+async function inputAttendance(studentIds, absentStudentIds, presentAbsentButtons) {
+    for (let k=0; k<studentIds.length; k++) {
+        if (absentStudentIds.includes(studentIds[k])) {
+            presentAbsentButtons[2*k+1].scrollIntoView({behavior: "smooth", block: "center"});
+            await sleep(1000);
+            presentAbsentButtons[2*k+1].click();
+            await sleep(1000);
+        }
+        else {
+            presentAbsentButtons[2*k].click();
+        }
+    }
+}
+
+async function save() {
     let save = document.querySelector(".btn.btn-primary");
     save.scrollIntoView({behavior: "smooth", block: "center"});
     await sleep(500);
     save.click();
-    await sleep(3000);
+    await sleep(4000);
 }
 
 function sleep(ms) {
