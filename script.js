@@ -25,7 +25,7 @@ const allAbsences = {
 
 let studentIds = await getStudentIds();
 for(let j=0; j<Object.keys(allAbsences).length; j++) {
-    selectAClass(Object.keys(allAbsences)[j]);
+    await selectAClass(Object.keys(allAbsences)[j]);
     let presentAbsentButtons = await getPresentAbsentButtons(studentIds);
     await inputAttendance(studentIds, allAbsences[Object.keys(allAbsences)[j]], presentAbsentButtons);
     await save();
@@ -59,14 +59,14 @@ async function selectAClass(date) {
     for(let m=1; m<classes.length; m++) {
         if (classes[m].textContent == str) {
             classes[m].click();
-            await sleep(5000);
+            await sleep(2000);
             break;
         }
     }
 }
 
 async function getPresentAbsentButtons(studentIds) {
-    await sleep(3000);
+    await sleep(1000);
     let presentAbsentButtons = document.querySelectorAll(".mdc-radio__native-control");
     for (let attempt=0; attempt<3; attempt++) {
         if (presentAbsentButtons.length >= studentIds.length*2) {
@@ -95,9 +95,9 @@ async function inputAttendance(studentIds, absentStudentIds, presentAbsentButton
 async function save() {
     let save = document.querySelector(".btn.btn-primary");
     save.scrollIntoView({behavior: "smooth", block: "center"});
-    await sleep(500);
+    await sleep(1000);
     save.click();
-    await sleep(4000);
+    await sleep(3000);
 }
 
 function sleep(ms) {
