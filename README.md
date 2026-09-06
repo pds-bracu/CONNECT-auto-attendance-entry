@@ -34,12 +34,12 @@ This script automates the process of entering attendance (absences) into the CON
 - Verify and **Save** the attendance in CONNECT
 
 ## Notes
-- Any student ID **not** listed under a date in `allAbsences` is automatically marked **Present** for that date.
-- The order of dates inside `allAbsences` does not matter.
-- Any date or student ID that doesn't match CONNECT's records is silently skipped — no error is thrown.
-- If you need to rerun the script (e.g., to fix a mistake), **always refresh the page first**. The page can occasionally lag to load, and rerunning without refreshing may cause errors as the script gets ahead of the page.
+- Any student ID **not** listed under a date in `rawAbsences` is automatically marked **Present** for that date.
+- The order of dates inside `rawAbsences` does not matter.
+- Any date or student ID that doesn't match CONNECT's records is silently skipped.
+- If you need to rerun the script (e.g., to fix a mistake), **always refresh the page first**. The page can occasionally lag to load, and rerunning without refreshing may cause errors.
 - Removing a student ID from a date's list and rerunning the script **will mark that student Present again** for that date.
-- After running the [script](script.js), you can still **manually modify attendance** until final submission.
+- After running the [script](script.js), you can still **manually modify attendance**.
 - The [script](script.js) edits the page dynamically. **Always verify attendance manually** before submitting.
 - Don't trust the [script](script.js) 100% - **double-check that all attendance is entered correctly** for each student.
 
