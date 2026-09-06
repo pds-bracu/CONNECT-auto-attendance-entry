@@ -9,19 +9,21 @@
 // NOTE: If rerunning the script, REFRESH the page first. It may occasionally lag to load and cause errors
 // NOTE: Removing a student ID from a date's list and rerunning will mark that student PRESENT again
 
-const allAbsences = {
+const rawAbsences = {
     "09-06-2026": ["1000054019", "1000055270", "24301321"],
     "14-06-2026": ["24101282"],
     "07-07-2026": ["23201047", "25121017"],
     "16-06-2026": ["1000054189", "1000055270", "24201302", "24301306"],
 };
 
-// const allAbsences = {
+// const rawAbsences = {
 //     "09-06-2026": [""],
 //     "14-06-2026": [""],
 //     "07-07-2026": [""],
-//     "16-06-2026": [""],
+//     "": [],
 // };
+
+const allAbsences = Object.fromEntries(Object.entries(absences).filter(([key]) => key !== ""));
 
 let studentIds = await getStudentIds();
 for(let j=0; j<Object.keys(allAbsences).length; j++) {
