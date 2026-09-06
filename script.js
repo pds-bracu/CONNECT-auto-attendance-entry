@@ -23,7 +23,7 @@ const rawAbsences = {
 //     "": [],
 // };
 
-const allAbsences = Object.fromEntries(Object.entries(absences).filter(([key]) => key !== ""));
+const allAbsences = Object.fromEntries(Object.entries(rawAbsences).filter(([key]) => key !== ""));
 
 let studentIds = await getStudentIds();
 for(let j=0; j<Object.keys(allAbsences).length; j++) {
