@@ -49,4 +49,4 @@ This project is open-source and available for use and modification as needed.
 ## Disclaimer
 Use at your own risk. The author is not responsible for any issues arising from misuse of the script.
 
-🔗 Refer to this [video](#) if you need help.
+🔗 Refer to this [video](https://youtu.be/oDZdMqNggm0) if you need help.
