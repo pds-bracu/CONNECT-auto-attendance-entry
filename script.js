@@ -1,13 +1,16 @@
 // Go to CONNECT --> Login --> Exam Controller --> Class Attendance --> Select Semester, Academic Degree, Course, Section --> Attendance Entry --> 3-dot menu --> Developer Tools
 // Developer Tools (Ctrl+Shift+I) -> Sources -> Left Pane (may be hidden, click >>) -> Snippets -> New Snippet
-// Paste the entire script, then replace the "allAbsences" object below (lines 12 to 17) with the content copied from your Google Sheet
+// Paste the entire script, then replace the "allAbsences" object below (lines 14 to 19) with the content copied from your Google Sheet
 // Remove any enclosing double quotes (" ") if the pasted content includes them
+// Adjust the class timing in the line 13
 // Ctrl + Enter to run
 //
 // NOTE: Any student ID NOT listed under a date is automatically marked PRESENT for that date
 // NOTE: Order of dates does not matter; incorrect dates or student IDs are simply skipped
 // NOTE: If rerunning the script, REFRESH the page first. It may occasionally lag to load and cause errors
 // NOTE: Removing a student ID from a date's list and rerunning will mark that student PRESENT again
+
+const classTime = "02:00 PM - 03:20 PM";
 
 const rawAbsences = {
     "09-06-2026": ["1000054019", "1000055270", "24301321"],
