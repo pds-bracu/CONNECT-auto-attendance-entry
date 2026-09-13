@@ -29,7 +29,8 @@ This script automates the process of entering attendance (absences) into the CON
 - In the left pane (may be hidden, click `>>` if needed), go to `Snippets`
 - Create a **New Snippet**
 - Paste the entire [script](script.js)
-- Paste the content you copied in Step 1, replacing **lines 12–17** (the `allAbsences` block) in the script. If the pasted content is wrapped in double quotes (`" "`), **remove them** before running
+- Paste the content you copied in Step 1, replacing **lines 14–19** (the `allAbsences` block) in the script. If the pasted content is wrapped in double quotes (`" "`), **remove them** before running
+- Adjust the class timing in line 13
 - Press `Ctrl + Enter` to run the [script](script.js)
 - Verify and **Save** the attendance in CONNECT
 
